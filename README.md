@@ -19,6 +19,7 @@
 
 ## Citation
 [1] Shadab, Rutishauser, Grima, and Hesse, 2024. A unified kinematic wave theory for melt infiltration into firn. arXiv preprint arXiv:2403.15996 (submitted).
+[2] Shadab, Adhikari, Rutishauser, Grima, and Hesse, 2024. A mechanism for ice layer formation in glacial firn. Geophysical Research Letters, 51(15), p.e2024GL109893.
 
 ## Getting Started
 ### Dependences
@@ -52,4 +53,4 @@ Figure 4 (complete figure, requires field data from within the folder): figure4_
 <p align="center">
 <img src="./Cover/cover.png" height="700">
 </p>
-Figure : Infiltration into a multilayered firn with porosity and temperature decay with depth: (a) Schematic diagram showing all of the layers. The resulting evolution of firn (b) porosity φ, (c) liquid water content LWC or volume fraction of water and (d) temperature T evaluated by the numerical simulation in the absence of heat diffusion. Here all dashed lines show analytic solutions computed from the unified kinematic wave theory proposed by Shadab et al., Arxiv (2024) [1]. The thin, grey dashed lines show theoretically calculated dimensionless times of saturation and ponding. The theoretical evolutions of the initial wetting front is shown with red dashed line  and the dynamics of saturated region after wetting front reaches z = 5 m is shown by blue and green dashed lines.
+Figure : Infiltration into a multilayered firn with porosity and temperature decay with depth: (a) Schematic diagram showing all of the layers. The resulting evolution of firn (b) porosity φ, (c) liquid water content LWC or volume fraction of water and (d) temperature T evaluated by the numerical simulation in the absence of heat diffusion (see paper [2]). Here all dashed lines show analytic solutions computed from the unified kinematic wave theory proposed by Shadab et al. (2024) [1] in Figure 13. The thin, grey dashed lines show theoretically calculated dimensionless times of saturation and ponding. The theoretical evolutions of the initial wetting front is shown with red dashed line  and the dynamics of saturated region after wetting front reaches z = 5 m is shown by blue and green dashed lines.
