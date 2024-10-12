@@ -19,6 +19,7 @@
 
 ## Citation
 [1] Shadab, Rutishauser, Grima, and Hesse, 2024. A unified kinematic wave theory for melt infiltration into firn. arXiv preprint arXiv:2403.15996 (submitted).
+
 [2] Shadab, Adhikari, Rutishauser, Grima, and Hesse, 2024. A mechanism for ice layer formation in glacial firn. Geophysical Research Letters, 51(15), p.e2024GL109893.
 
 ## Getting Started
