@@ -1,6 +1,6 @@
 # Unified kinematic wave theory for melt infiltration into firn
 ## Authors
-- Mohammad Afzal Shadab<sup>1,2,3</sup> (mashadab@utexas.edu)
+- Mohammad Afzal Shadab<sup>1,2,3</sup> (mashadab@princeton.edu/mashadab@utexas.edu)
 - Anja Rutishauser<sup>4,5</sup>
 - Cyril Grima<sup>3,4</sup>
 - Marc Andre Hesse<sup>1,3,4</sup> (mhesse@jsg.utexas.edu)
