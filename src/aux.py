@@ -30,8 +30,8 @@ from matplotlib import colors
 #Colors
 light_gray = [0.85,0.85,0.85]
 blue       = [ 30/255 ,144/255 , 255/255 ]
-light_red  = [1.0,0.5,0.5]
-light_blue = [0.5,0.5,1.0]
+light_red  = [0,0,0]
+light_blue = [0.0,0,0]
 light_black= [0.5,0.5,0.5]
 
 class Grid:
