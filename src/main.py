@@ -19,14 +19,15 @@ L   = 333.55e3 #latent heat of fusion (J/kg)
 Ste = Cpw*Tm/L #Stefan number
 Cpr = Cpi/Cpw  #ratio of specific heat for ice to water
 
-#combined 
-#Call: analytical(case_no,etaL,etaR,C_L,H_L,C_R,H_R, m, n)
-#Analytical function arguments: case_number,
+#Function Call: analytical(case_no,etaL,etaR,C_L,H_L,C_R,H_R, m, n)
+#Analytical function arguments: case_number in code,
 #etaL: left velocity,etaR: right velocity
 #C_L: left composition,H_L: left enthalpy
 #C_R: right composition,H_R: right enthalpy, 
 #m: Porosity exponent in absolute permeability definition, n: saturation exponent in relative permeability definition
 
+################################################################################################
+#Combined cases I, II and III
 #Case I: Contact discontinuity only
 eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(1,-0.1,1,0.7,0.4,0.89691358,0.45, m, n) #calculating analytic solution
 plot_time_varying_paper(C_analy1,H_analy1,eta,Ste,Cpr,'1_contact') #plotting time variation of volume fraction for case I
@@ -73,18 +74,15 @@ if np.isnan(H_analy1[1]) == False:
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined.pdf")
 
-################################################
-
-
-
-#Combined cases
+################################################################################################
+#Combined cases IV and V
 #Case IV: Contact discontinuity 1 and Rarefaction 2
 eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(4,-0.1,1,0.3,0.1,0.948,0.528, m, n) #calculating analytic solution
-plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'4-C1R2-rarefaction',np.array([1e-4,0.75,1.5]),-0.05,1) #plotting time variation of volume fraction for case III
+plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'4-C1R2-rarefaction',np.array([1e-4,0.75,1.5]),-0.05,1) #plotting time variation of volume fraction for case IV
 
 #Case V: Contact discontinuity 1 and Shock 2
 eta,C_analy2,H_analy2,C_case_plot2,H_case_plot2 = analytical(5,-0.1,1,0.948,0.528,0.3,0.1, m, n)#calculating analytic solution
-plot_time_varying_paper_variable_limits_variable_time(C_analy2,H_analy2,eta,Ste,Cpr,'5-C1S2-shock',np.array([1e-4,0.75,1.5]),-0.05,1)  #plotting time variation of volume fraction for case III
+plot_time_varying_paper_variable_limits_variable_time(C_analy2,H_analy2,eta,Ste,Cpr,'5-C1S2-shock',np.array([1e-4,0.75,1.5]),-0.05,1)  #plotting time variation of volume fraction for case V
 
 plotting_combined2(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n) #combined plotting states for cases IV-V in hodograph plane
 
@@ -110,7 +108,6 @@ if np.isnan(H_analy1[1]) == False:
     plt.ylabel(r'Dim-less Velocity $\eta = \zeta/\tau$')
 
     plt.subplot(122)
-    #plt.plot((0.2,0.6), (0,0), 'k--',linewidth=3,label='Initial jump')
     plot = [plt.plot(H_analy1,eta,'b-',linewidth=3)]
     plot = [plt.plot(H_analy2,eta,'r-',linewidth=3)]
     plt.ylim([1,-0.1])
@@ -126,20 +123,67 @@ if np.isnan(H_analy1[1]) == False:
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new.pdf")
 
+################################################################################################
 
-#Combined cases (left state in Region 1)
-#plotting(simulation_name,H_plotCH,C_plotCH,m,n) #plotting in hodograph plane
-eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(6,-0.1,1,0.6,-0.01,0.8,-0.1, m, n)
-plot_time_varying_paper(C_analy1,H_analy1,eta,Ste,Cpr,'6-C-contact')
-eta,C_analy2,H_analy2,C_case_plot2,H_case_plot2 = analytical(12,-0.1,1,0.7,-0.1,0.8,0.6, m, n)
-plot_time_varying_paper(C_analy2,H_analy2,eta,Ste,Cpr,'12-contact-shock')
+#Case VI: Backfilling shock 1, Jump 2, and Shock 3
+#Temperate saturated formation
+C_analy1,H_analy1,C_case_plot1,H_case_plot1 = [[],[],[],[]]
+C_analy2,H_analy2,C_case_plot2,H_case_plot2 = [[],[],[],[]] 
 
-plotting_combined3(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)
+eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(31,-0.5,0.5,0.9,0.4,0.8, 0.1, m, n) #calculating analytic solution
 
+plotting_combined7(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n) #combined plotting states for case VI in hodograph plane
+plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'31-temperate-saturated-region',np.array([1e-4,0.5,1.0]),-0.4,0.3)   #plotting time variation of volume fraction for case VI
 
 marker = MarkerStyle("d")
 marker._transform.rotate_deg(90)
 
+#Plotting the C and H in the velocity domain for case VI
+fig = plt.figure(figsize=(10,10), dpi=100)
+if np.isnan(H_analy1[1]) == False:
+    plt.subplot(121)
+    #plt.plot((0.2,0.8), (0,0), 'k--',linewidth=3,label='Initial jump')
+    plot = [plt.plot(C_analy1,eta,'b-',linewidth=3)]
+    plt.ylim([0.5,-0.5])
+    plt.xlim([np.min(C_analy1)-0.01,np.max(C_analy1)+0.02])    
+    plt.plot(C_case_plot1[0],-0.4,'bx', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(C_case_plot1[6666],-0.15,marker=marker,color="blue", markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(C_case_plot1[13332],0.1,'bs', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(C_case_plot1[-1],0.35,'bo', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.xlabel(r'Dim-less Composition $\mathcal{C}$')    
+    plt.ylabel(r'Dim-less Velocity $\eta = \zeta/\tau$')
+
+    plt.subplot(122)
+    #plt.plot((0.2,0.6), (0,0), 'k--',linewidth=3,label='Initial jump')
+    plot = [plt.plot(H_analy1,eta,'b-',linewidth=3)]
+    plt.ylim([0.5,-0.5])
+    plt.xlim([np.min(H_analy1)-0.05,np.max(H_analy1)+0.05]) 
+    plt.plot(H_case_plot1[0],-0.4,'bx', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(H_case_plot1[-1],0.35,'bo', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(H_case_plot1[6666],-0.15,marker=marker,color="blue", markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.plot(H_case_plot1[13332],0.1,'bs', markersize=20,markerfacecolor='white',markeredgewidth=3)
+    plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')
+
+plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
+plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new7.pdf")
+
+################################################################################################
+#Combined cases VII and VIII
+
+#Case VII: Contact discontinuity 
+eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(6,-0.1,1,0.6,-0.01,0.8,-0.1, m, n)  #calculating analytic solution
+plot_time_varying_paper(C_analy1,H_analy1,eta,Ste,Cpr,'6-C-contact') #plotting time variation of volume fraction for case VII
+
+#Case VIII: Contact discontinuity 1 and Rarefaction 2
+eta,C_analy2,H_analy2,C_case_plot2,H_case_plot2 = analytical(12,-0.1,1,0.7,-0.1,0.8,0.6, m, n)  #calculating analytic solution
+plot_time_varying_paper(C_analy2,H_analy2,eta,Ste,Cpr,'12-contact-shock') #plotting time variation of volume fraction for case VIII
+
+plotting_combined3(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n) #combined plotting states for cases VII-VIII in hodograph plane
+
+marker = MarkerStyle("d")
+marker._transform.rotate_deg(90)
+
+#Plotting the C and H in the velocity domain for case VII and VIII
 fig = plt.figure(figsize=(10,10), dpi=100)
 if np.isnan(H_analy1[1]) == False:
     plt.subplot(121)
@@ -169,31 +213,35 @@ if np.isnan(H_analy1[1]) == False:
     plt.plot(H_case_plot2[int(10000-1)],0,'rs', markersize=20,markerfacecolor='white',markeredgewidth=3)
     plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')    
 
-                     
-#plt.ylim([np.min([np.min(H_sol),np.min(C_sol)])-0.05,np.max([np.max(H_sol),np.max(C_sol)])+0.05])
 
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new3.pdf")
 
+
+################################################################################################
+#Combined cases IX and X
+
+#Case IX: Shock
+#Combined cases (R2 to R1)
 C_analy1,H_analy1,C_case_plot1,H_case_plot1 = [[],[],[],[]]
 C_analy2,H_analy2,C_case_plot2,H_case_plot2 = [[],[],[],[]] 
+eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(13,-0.1,1,0.8,0.25,0.5,-0.05, m, n)  #calculating analytic solution
+plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'13-C-shock',np.array([1e-4,0.5,1.0]),-0.05,0.15)  #plotting time variation of volume fraction for case IX
 
-#Combined cases (R2 to R1)
-#plotting(simulation_name,H_plotCH,C_plotCH,m,n) #plotting in hodograph plane
-eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(13,-0.1,1,0.8,0.25,0.5,-0.05, m, n)
-plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'13-C-shock',np.array([1e-4,0.5,1.0]),-0.05,0.15)
-eta,C_analy2,H_analy2,C_case_plot2,H_case_plot2 = analytical(14,-0.1,1,0.4,0.1,0.65,-0.08, m, n) #(14,-0.1,1,0.0894,0.0894,0.7,-0.1, m, n)
-plot_time_varying_paper_variable_limits_variable_time(C_analy2,H_analy2,eta,Ste,Cpr,'14-contact-shock',np.array([1e-4,0.5,1.0]),-0.005,0.05)
+#Case X: Contact Discontinuity 1 and Shock 2
+eta,C_analy2,H_analy2,C_case_plot2,H_case_plot2 = analytical(14,-0.1,1,0.4,0.1,0.65,-0.08, m, n)  #calculating analytic solution
+plot_time_varying_paper_variable_limits_variable_time(C_analy2,H_analy2,eta,Ste,Cpr,'14-contact-shock',np.array([1e-4,0.5,1.0]),-0.005,0.05)  #plotting time variation of volume fraction for case X
 
-plotting_combined4(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)
+plotting_combined4(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)  #combined plotting states for cases IX and X in hodograph plane
+
 
 marker = MarkerStyle("d")
 marker._transform.rotate_deg(90)
 
+#Plotting the C and H in the velocity domain for cases IX and X
 fig = plt.figure(figsize=(10,10), dpi=100)
 if np.isnan(H_analy1[1]) == False:
     plt.subplot(121)
-    #plt.plot((0.2,0.8), (0,0), 'k--',linewidth=3,label='Initial jump')
     plot = [plt.plot(C_analy1,eta,'b-',linewidth=3)]
     plot = [plt.plot(C_analy2,eta,'r-',linewidth=3)]
     plt.ylim([1,-0.1])
@@ -207,7 +255,6 @@ if np.isnan(H_analy1[1]) == False:
     plt.ylabel(r'Dim-less Velocity $\eta = \zeta/\tau$')
     
     plt.subplot(122)
-    #plt.plot((0.2,0.6), (0,0), 'k--',linewidth=3,label='Initial jump')
     plot = [plt.plot(H_analy1,eta,'b-',linewidth=3)]
     plot = [plt.plot(H_analy2,eta,'r-',linewidth=3)]
     plt.ylim([1,-0.1])
@@ -219,71 +266,23 @@ if np.isnan(H_analy1[1]) == False:
     plt.plot(H_case_plot2[int(10000-1)],0.01,'rs', markersize=20,markerfacecolor='white',markeredgewidth=3)
     plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')
 
-                     
-#plt.ylim([np.min([np.min(H_sol),np.min(C_sol)])-0.05,np.max([np.max(H_sol),np.max(C_sol)])+0.05])
-
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new4.pdf")
 
+################################################################################################
+#Case XI: Backfilling shock 1, Jump 2, and Shock 3 (in cold firn)
+#Saturated region in cold medium
 
-#Temperate saturated formation
 C_analy1,H_analy1,C_case_plot1,H_case_plot1 = [[],[],[],[]]
 C_analy2,H_analy2,C_case_plot2,H_case_plot2 = [[],[],[],[]] 
-#Combined cases (R2 to R1)
-#plotting(simulation_name,H_plotCH,C_plotCH,m,n) #plotting in hodograph plane
-eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(31,-0.5,0.5,0.9,0.4,0.8, 0.1, m, n)
-
-plotting_combined7(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)
-plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'31-temperate-saturated-region',np.array([1e-4,0.5,1.0]),-0.4,0.3)
-
+eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(32,-2.1,0.7,0.85,0.65,0.5,-0.09471293659121571, m, n) #calculating analytic solution
+plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'32-Saturated-S1J2S3',np.array([1e-4,0.1,0.2]),-0.4,0.1) #plotting time variation of volume fraction for case XI
+plotting_combined5(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n) #combined plotting states for case XI in hodograph plane
 
 marker = MarkerStyle("d")
 marker._transform.rotate_deg(90)
 
-fig = plt.figure(figsize=(10,10), dpi=100)
-if np.isnan(H_analy1[1]) == False:
-    plt.subplot(121)
-    #plt.plot((0.2,0.8), (0,0), 'k--',linewidth=3,label='Initial jump')
-    plot = [plt.plot(C_analy1,eta,'b-',linewidth=3)]
-    plt.ylim([0.5,-0.5])
-    plt.xlim([np.min(C_analy1)-0.01,np.max(C_analy1)+0.02])    
-    plt.plot(C_case_plot1[0],-0.4,'bx', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(C_case_plot1[6666],-0.15,marker=marker,color="blue", markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(C_case_plot1[13332],0.1,'bs', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(C_case_plot1[-1],0.35,'bo', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.xlabel(r'Dim-less Composition $\mathcal{C}$')    
-    plt.ylabel(r'Dim-less Velocity $\eta = \zeta/\tau$')
-
-    plt.subplot(122)
-    #plt.plot((0.2,0.6), (0,0), 'k--',linewidth=3,label='Initial jump')
-    plot = [plt.plot(H_analy1,eta,'b-',linewidth=3)]
-    plt.ylim([0.5,-0.5])
-    plt.xlim([np.min(H_analy1)-0.05,np.max(H_analy1)+0.05]) 
-    plt.plot(H_case_plot1[0],-0.4,'bx', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(H_case_plot1[-1],0.35,'bo', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(H_case_plot1[6666],-0.15,marker=marker,color="blue", markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.plot(H_case_plot1[13332],0.1,'bs', markersize=20,markerfacecolor='white',markeredgewidth=3)
-    plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')
-             
-#plt.ylim([np.min([np.min(H_sol),np.min(C_sol)])-0.05,np.max([np.max(H_sol),np.max(C_sol)])+0.05])
-
-plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
-plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new7.pdf")
-
-plot_phiw_CH(C_analy1,H_analy1,eta,Ste,Cpr,'7')
-################################################################################################
-#Saturated regions (cold)
-C_analy1,H_analy1,C_case_plot1,H_case_plot1 = [[],[],[],[]]
-C_analy2,H_analy2,C_case_plot2,H_case_plot2 = [[],[],[],[]] 
-#Combined cases (R2 to R1)
-#plotting(simulation_name,H_plotCH,C_plotCH,m,n) #plotting in hodograph plane
-eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(32,-2.1,0.7,0.85,0.65,0.5,-0.09471293659121571, m, n) #0.6,0.95=0.5,0.85
-plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'32-Saturated-S1J2S3',np.array([1e-4,0.1,0.2]),-0.4,0.1)
-plotting_combined5(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)
-################################################################################################
-marker = MarkerStyle("d")
-marker._transform.rotate_deg(90)
-
+#Plotting the C and H in the velocity domain for case XI
 fig = plt.figure(figsize=(10,10), dpi=100)
 if np.isnan(H_analy1[1]) == False:
     plt.subplot(121)
@@ -309,28 +308,25 @@ if np.isnan(H_analy1[1]) == False:
     plt.plot(H_case_plot1[-1],0.5,'bo', markersize=20,markerfacecolor='white',markeredgewidth=3)
     plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')
 
-                     
-#plt.ylim([np.min([np.min(H_sol),np.min(C_sol)])-0.05,np.max([np.max(H_sol),np.max(C_sol)])+0.05])
-
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new5.pdf")
 
-
-plot_phiw_CH(C_analy1,H_analy1,eta,Ste,Cpr,'5_saturated_region')
+################################################################################################
+#Case XII: Backfilling shock 1, Jump 2, and Contact discontinuity 3 (in cold firn)
+#Impermeable ice layer formation
 
 #Ice lens formation
 C_analy1,H_analy1,C_case_plot1,H_case_plot1 = [[],[],[],[]]
 C_analy2,H_analy2,C_case_plot2,H_case_plot2 = [[],[],[],[]] 
-#Combined cases (R2 to R1)
-#plotting(simulation_name,H_plotCH,C_plotCH,m,n) #plotting in hodograph plane
-eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(33,-7,1,0.95,0.65,0.95,-0.17995457952330984, m, n)
-plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'33-impermeable-ice-lens',np.array([1e-5,0.02,0.04]),-0.25,0.05)
+eta,C_analy1,H_analy1,C_case_plot1,H_case_plot1 = analytical(33,-7,1,0.95,0.65,0.95,-0.17995457952330984, m, n) #calculating analytic solution
+plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,'33-impermeable-ice-lens',np.array([1e-5,0.02,0.04]),-0.25,0.05) #plotting time variation of volume fraction for case XII
 
-plotting_combined6(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n)
+plotting_combined6(simulation_name,C_case_plot1,H_case_plot1,C_case_plot2,H_case_plot2,m,n) #combined plotting states for case XII in hodograph plane
 
 marker = MarkerStyle("d")
 marker._transform.rotate_deg(90)
 
+#Plotting the C and H in the velocity domain for case XII
 fig = plt.figure(figsize=(10,10), dpi=100)
 if np.isnan(H_analy1[1]) == False:
     plt.subplot(121)
@@ -356,9 +352,5 @@ if np.isnan(H_analy1[1]) == False:
     plt.plot(H_case_plot1[13332],0,'bs', markersize=20,markerfacecolor='white',markeredgewidth=3)
     plt.xlabel(r'Dim-less Enthalpy $\mathcal{H}$')
              
-#plt.ylim([np.min([np.min(H_sol),np.min(C_sol)])-0.05,np.max([np.max(H_sol),np.max(C_sol)])+0.05])
-
 plt.tight_layout(pad=0.4, w_pad=0.5, h_pad=1.0)
 plt.savefig(f"../Figures/{simulation_name}_tmax_combined_new6.pdf")
-
-plot_phiw_CH(C_analy1,H_analy1,eta,Ste,Cpr,'6_icelens')
