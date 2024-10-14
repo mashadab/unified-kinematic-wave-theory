@@ -43,13 +43,8 @@ After cloning the repository and installing the required libraries, run the Pyth
 Comments are provided in the code. All codes to run are provided in `Main` folder. Output figures are located in the Figures folder.
 
 #### Figures plotted by corresponding Python file in `Main/Codes/` folder with rough times on a Modern 4 core PC
-Figure 2: (a to d) figure2atod_singlecase.py   <Approx runtime: 5 mins >
-          (e to f) figure2ef_regime_diagram.py <Approx runtime: 1-5 seconds >
-          
-Figure 3: figre3_multiple_cycles_newBC.py  <Approx runtime: 10 mins >
-
-Figure 4 (complete figure, requires field data from within the folder): figure4_composition_new_with_crater_surface_tracking.py <Approx runtime: 20 mins >
-
+Figure 6-12: src/main.py   <Approx runtime: 5 mins >
+Figure   13: figure2ef_regime_diagram.py <Approx runtime: 1-5 seconds >
 
 <p align="center">
 <img src="./Cover/cover.png" height="700">
