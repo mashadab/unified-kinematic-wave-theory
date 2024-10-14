@@ -1,10 +1,19 @@
-#Coding the non-linear double component solution
-#Mohammad Afzal Shadab
-#Date modified: 06/05/21
+#Unified kinematic wave theory
+#Manuscript DOI: https://arxiv.org/pdf/2403.15996
+#Mohammad Afzal Shadab, Anja Rutishauser, Cyril Grima and Marc Hesse
+#University of Texas at Austin
+#Contact email: mashadab@utexas.edu / mashadab@princeton.edu
+#Date modified: 10/14/24
 
-import sys
+#Function Call: analytical(case_no,etaL,etaR,C_L,H_L,C_R,H_R, m, n)
+#Analytical function arguments: case_number in code,
+#etaL: left velocity,etaR: right velocity
+#C_L: left composition,H_L: left enthalpy
+#C_R: right composition,H_R: right enthalpy, 
+#m: Porosity exponent in absolute permeability definition, n: saturation exponent in relative permeability definition
+
+#import libraries and auxillaries: aux
 from aux import *
-from matplotlib.markers import MarkerStyle
 
 #test details
 simulation_name = f'solutions_two_component_'
@@ -18,13 +27,6 @@ Tm  = 273.16 #melting temperature (K)
 L   = 333.55e3 #latent heat of fusion (J/kg)
 Ste = Cpw*Tm/L #Stefan number
 Cpr = Cpi/Cpw  #ratio of specific heat for ice to water
-
-#Function Call: analytical(case_no,etaL,etaR,C_L,H_L,C_R,H_R, m, n)
-#Analytical function arguments: case_number in code,
-#etaL: left velocity,etaR: right velocity
-#C_L: left composition,H_L: left enthalpy
-#C_R: right composition,H_R: right enthalpy, 
-#m: Porosity exponent in absolute permeability definition, n: saturation exponent in relative permeability definition
 
 ################################################################################################
 #Combined cases I, II and III

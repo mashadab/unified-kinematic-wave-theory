@@ -29,7 +29,7 @@ from matplotlib import colors
 
 #Colors
 light_gray = [0.85,0.85,0.85]
-blue   = [ 30/255 ,144/255 , 255/255 ]
+blue       = [ 30/255 ,144/255 , 255/255 ]
 light_red  = [1.0,0.5,0.5]
 light_blue = [0.5,0.5,1.0]
 light_black= [0.5,0.5,0.5]
@@ -2846,66 +2846,3 @@ def plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,
     ax3.set_title(r'%.2f'%(kk[2]))
     plt.subplots_adjust(wspace=0.15, hspace=0)
     plt.savefig(f"../Figures/{case_no}_combined.pdf")  
-    
-    # # Temperature plots
-    
-    # fig = plt.figure(figsize=(7.5,7.5) , dpi=100)
-    # ax1 = fig.add_subplot(1, 3, 1)
-    # ax2 = fig.add_subplot(1, 3, 2)
-    # ax3 = fig.add_subplot(1, 3, 3)
-    
-    # ax1.set_ylabel(r'Dimensionless depth')
-    # #ax1.set_xlim([0,1])
-    
-    # #ax2.set_xlim([0,1])
-    # ax2.axes.yaxis.set_visible(False)
-    
-    # #ax3.set_xlim([0,1])
-    # ax3.axes.yaxis.set_visible(False)
-    
-    # #manager = plt.get_current_fig_manager()
-    # #manager.window.showMaximized()
-    
-    # kk = times  #time stamps
-    
-    # ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
-    # ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
-    # ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
-
-    # ax1.set_ylim([max_depth,min_depth])
-    # ax2.set_ylim([max_depth,min_depth])
-    # ax3.set_ylim([max_depth,min_depth]) 
-    
-    
-    # k = kk[0] 
-    
-    # print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
-    # left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
-    # right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
-    
-    # H_analy_left =np.ones_like(left)*H_analy1[0]
-    # C_analy_left=np.ones_like(left)*C_analy1[0]
-    # H_analy_right =np.ones_like(right)*H_analy1[-1]
-    # C_analy_right=np.ones_like(right)*C_analy1[-1] 
-    
-    # H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
-    # C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
-    # eta = np.concatenate((left,eta,right),axis=0)
-    
-    # ###Add Temp plot
-    # ax1.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
-    # k =  kk[1]
-    # ax2.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
-    # plt.xlabel(r'Dim-less Temperature $\mathcal{T}$')    
-    # k =  kk[2]
-    # ax3.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
-    
-    
-    # plt.subplots_adjust(wspace=0, hspace=0.2)
-    # ax1.set_title(r'$\tau=$%.2f'%(kk[0]))
-    # ax2.set_title(r'%.2f'%(kk[1]))
-    # ax3.set_title(r'%.2f'%(kk[2]))
-    # plt.subplots_adjust(wspace=0.15, hspace=0)
-    # plt.savefig(f"../Figures/{case_no}_Temp_combined.pdf")  
-
-
