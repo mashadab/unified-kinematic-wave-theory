@@ -111,65 +111,6 @@ def f_Cn(H,C,m,n):
     fC[C>1]  = 0.0       #Region 4: outer region   
     return fC
 
-
-'''
-#Right one (latest)
-def f_H(H,C,m,n):
-    fH = np.zeros_like(H)         #Region 1: ice + gas
-    fH[H>0] = (1-C[H>0]+H[H>0])**m * (H[H>0]/(1-C[H>0]+H[H>0]))**n  #Region 2: ice + water + gas
-    fH[H>C] = H[H>C]*C[H>C]**(n-1)#Region 3: water + gas
-    
-    fH[C>=1] = H[C>=1]**m     #Region 4: single component region
-    #fH[C>1]  = 0.0       #Region 4: outer region             
-    return fH
-
-def f_Hm(H,C,m,n):
-    fH = np.zeros_like(H)         #Region 1: ice + gas
-    fH[H>0] = (1-C[H>0]+H[H>0])**m  #Region 2: ice + water + gas
-    fH[H>C] = 1.0#Region 3: water + gas
-    
-    fH[C>=1] = 1.0#H[C>=1]**m     #Region 4: single component region
-    #fH[C>1]  = 0.0       #Region 4: outer region             
-    return fH
-
-def f_Hn(H,C,m,n):
-    fH = np.zeros_like(H)         #Region 1: ice + gas
-    fH[H>0] = (H[H>0]/(1-C[H>0]+H[H>0]))**n  #Region 2: ice + water + gas
-    fH[H>C] = H[H>C]*C[H>C]**(n-1)#Region 3: water + gas
-    
-    fH[C>=1] = H[C>=1]**m     #Region 4: single component region
-    #Sw #if Sw= 1, then  flux goes to zero.
-    #fH[C>1]  = 0.0       #Region 4: outer region             
-    return fH
-
-def f_C(H,C,m,n):
-    fC = np.zeros_like(H)          #Region 1: ice + gas
-    fC[H>0] = (1-C[H>0]+H[H>0])**m * (H[H>0]/(1-C[H>0]+H[H>0]))**n        #Region 2: ice + water
-    fC[H>C] = C[H>C]**(n)#Region 3: water + gas
-
-    fC[C>=1] = 0.0#H[C==1]**m            #Region 4: single component region
-    #fC[C>1]  = 0.0       #Region 4: outer region   
-    return fC
-
-def f_Cm(H,C,m,n):
-    fC = np.zeros_like(H)          #Region 1: ice + gas
-    fC[H>0] = (1-C[H>0]+H[H>0])**m        #Region 2: ice + water
-    fC[H>C] = 1.0#Region 3: water + gas
-
-    fC[C==1] = 0.0#H[C==1]**m            #Region 4: single component region
-    fC[C>1]  = 0.0       #Region 4: outer region   
-    return fC
-
-def f_Cn(H,C,m,n):
-    fC = np.zeros_like(H)          #Region 1: ice + gas
-    fC[H>0] = (H[H>0]/(1-C[H>0]+H[H>0]))**n        #Region 2: ice + water
-    fC[H>C] = C[H>C]**(n)#Region 3: water + gas
-
-    fC[C==1] = 0.0            #Region 4: single component region
-    fC[C>1]  = 0.0       #Region 4: outer region   
-    return fC
-'''
-
 def phi_w(H,C):
     phiw = np.zeros_like(H)#Region 1: all ice
     phiw[H>0] = H[H>0]     #Region 2: ice + water
@@ -278,60 +219,6 @@ def plotting(simulation_name,H_plot,C_plot,m,n):
     plt.plot(C4,H,'-',c=light_red)
     plt.plot(C5,H,'-',c=light_red)
     
-    '''
-    #Region 3 Water and gas
-    C1_region3 = int_region3_curves_lambda2(np.array([[0.05],[1.0]]),H, m, n)   #u0 = [C,H]^T
-    C2_region3 = int_region3_curves_lambda2(np.array([[0.2],[1.0]]),H, m, n) 
-    C3_region3 = int_region3_curves_lambda2(np.array([[0.4],[1.0]]),H, m, n) 
-    C4_region3 = int_region3_curves_lambda2(np.array([[0.6],[1.0]]),H, m, n) 
-    C5_region3 = int_region3_curves_lambda2(np.array([[0.8],[1.0]]),H, m, n) 
-    
-    C1_2_region3 = int_region3_curves_lambda1(np.array([[0.05],[1.0]]),H, m, n)   #u0 = [C,H]^T
-    C2_2_region3 = int_region3_curves_lambda1(np.array([[0.2],[1.0]]),H, m, n)
-    C3_2_region3 = int_region3_curves_lambda1(np.array([[0.4],[1.0]]),H, m, n) 
-    C4_2_region3 = int_region3_curves_lambda1(np.array([[0.6],[1.0]]),H, m, n) 
-    C5_2_region3 = int_region3_curves_lambda1(np.array([[0.8],[1.0]]),H, m, n) 
-    
-    #removing the curves outside the region
-    C1_region3[C1_region3>H] = np.nan
-    C2_region3[C2_region3>H] = np.nan
-    C3_region3[C3_region3>H] = np.nan
-    C4_region3[C4_region3>H] = np.nan
-    C5_region3[C5_region3>H] = np.nan
-    C1_2_region3[C1_2_region3>H] = np.nan
-    C2_2_region3[C2_2_region3>H] = np.nan
-    C3_2_region3[C3_2_region3>H] = np.nan
-    C4_2_region3[C4_2_region3>H] = np.nan
-    C5_2_region3[C5_2_region3>H] = np.nan
-    
-    
-    C1_region3[(0.366*3.428+1)*C1_region3<H] = np.nan
-    C2_region3[(0.366*3.428+1)*C2_region3<H] = np.nan
-    C3_region3[(0.366*3.428+1)*C3_region3<H] = np.nan
-    C4_region3[(0.366*3.428+1)*C4_region3<H] = np.nan
-    C5_region3[(0.366*3.428+1)*C5_region3<H] = np.nan
-    C1_2_region3[(0.366*3.428+1)*C1_2_region3<H] = np.nan
-    C2_2_region3[(0.366*3.428+1)*C2_2_region3<H] = np.nan
-    C3_2_region3[(0.366*3.428+1)*C3_2_region3<H] = np.nan
-    C4_2_region3[(0.366*3.428+1)*C4_2_region3<H] = np.nan
-    C5_2_region3[(0.366*3.428+1)*C5_2_region3<H] = np.nan    
-    
-
-    plt.plot(C1_2_region3,H,c=light_blue)
-    plt.plot(C2_2_region3,H,c=light_blue)
-    plt.plot(C3_2_region3,H,c=light_blue)
-    plt.plot(C4_2_region3,H,c=light_blue)
-    plt.plot(C5_2_region3,H,c=light_blue)
-    plt.plot(C1_region3,H,c=light_red)
-    plt.plot(C2_region3,H,c=light_red)
-    plt.plot(C3_region3,H,c=light_red)
-    plt.plot(C4_region3,H,c=light_red)
-    plt.plot(C5_region3,H,c=light_red)
-
-    plt.plot([1,0],[(0.366*3.428+1),0],'k--',alpha=0.3)
-    
-    '''
-    
     ###Ice lens formation region
     pp3 = plt.Polygon([[1, 0],
                    [1, -0.3],
@@ -363,25 +250,6 @@ def plotting(simulation_name,H_plot,C_plot,m,n):
     x_direct1 = C_plot[int(len(H_plot)/4)]-C_plot[int(len(H_plot)/4)-1]
     y_direct1 = H_plot[int(len(H_plot)/4)]-H_plot[int(len(H_plot)/4)-1]
     #plt.arrow(x_pos1, y_pos1, x_direct1, y_direct1,head_width=0.04, head_length=0.04, fc='k', ec='k')
-    
-    '''
-    #Only for saturated case
-    #adding arrow
-    x_pos1 = C_plot[int(len(H_plot)/6)-1]
-    y_pos1 = H_plot[int(len(H_plot)/6)-1]
-    x_direct1 = C_plot[int(len(H_plot)/6)]-C_plot[int(len(H_plot)/6)-1]
-    y_direct1 = H_plot[int(len(H_plot)/6)]-H_plot[int(len(H_plot)/6)-1]
-    #plt.arrow(x_pos1, y_pos1, x_direct1, y_direct1,head_width=0.04, head_length=0.04, fc='k', ec='k')
-    
-    #adding arrow
-    x_pos3 = C_plot[int(len(H_plot)/2)-1]
-    y_pos3 = H_plot[int(len(H_plot)/2)-1]
-    x_direct3 = C_plot[int(len(H_plot)/2)]-C_plot[int(len(H_plot)/2)-1]
-    y_direct3 = H_plot[int(len(H_plot)/2)]-H_plot[int(len(H_plot)/2)-1]
-    #plt.arrow(x_pos3, y_pos3, x_direct3, y_direct3,head_width=0.04, head_length=0.04, fc='k', ec='k')    
-    ############
-    '''
-    
     
     x_pos2 = C_plot[int(len(H_plot)*2/3)-1]
     y_pos2 = H_plot[int(len(H_plot)*2/3)-1]
@@ -2497,5 +2365,547 @@ def plot_time_varying_lower_layer(C_analy1,H_analy1,eta,Ste,Cpr,case_no):  #when
     plt.subplots_adjust(wspace=0.15, hspace=0)
     plt.savefig(f"../Figures/{case_no}_combined_later.pdf")  
 
+
+#Making one huge subplot
+light_gray = [0.85,0.85,0.85]
+blue   = [ 30/255 ,144/255 , 255/255 ]
+
+def plot_phiw_CH(C_analy1,H_analy1,eta,Ste,Cpr,case_no):
+    fig, (ax1, ax2) = plt.subplots(1,2, sharey=True,figsize=(12,7) , dpi=100)
+    #fig.suptitle('Vertically stacked subplots')
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    if np.isnan(H_analy1[1]) == False:
+        ax1.plot(C_analy1,eta,'-',c=light_blue,label=r'$\mathcal{C}$ ')
+        ax1.plot(H_analy1,eta,'-',c=light_black,label=r'$\mathcal{H}$')
+        ax1.plot(T(H_analy1,C_analy1,Ste,Cpr),eta,'-',c=light_red,label=r'$\mathcal{T}$')
+
+    ax2.fill_betweenx(eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    ax2.set_xlim([0, 1])
+    ax2.set_ylim([np.max(eta),np.min(eta)])
+    #ax3.plot(porosity(H_sol[:,Nt-1],C_sol[:,Nt-1]),Grid.xc/t[Nt-1],'k--',label=r'$\varphi$')
+    #ax3.plot(saturation(H_sol[:,Nt-1],C_sol[:,Nt-1])[0],Grid.xc/t[Nt-1],'b--',label=r'$S_w$')
+    #ax3.set_xlim([0, 1])
+    
+    ax1.set_ylabel(r'Dim-less depth / Dim-less time')
+    ax1.set_xlabel(r'$\mathcal{C},\mathcal{H}$, Dim-less Temperature $\mathcal{T}$')
+    ax2.set_xlabel(r'Volume fractions $\phi$')
+    ax1.legend(loc='lower right',borderaxespad=0.)
+    ax2.legend(loc='lower left',borderaxespad=0.)
+    #ax3.legend(loc='upper right',borderaxespad=0.)
+    plt.savefig(f"../Figures/{case_no}_combined.pdf")    
+
+
+def plot_time_varying_ice_lensAGU(C_analy1,H_analy1,eta,Ste,Cpr,case_no):
+
+    brown  = [181/255 , 101/255, 29/255]
+    red    = [255/255 ,255/255 ,255/255 ]
+    blue   = [ 30/255 ,144/255 , 255/255 ]
+    green  = [  0/255 , 166/255 ,  81/255]
+    orange = [247/255 , 148/255 ,  30/255]
+    purple = [102/255 ,  45/255 , 145/255]
+    brown  = [155/255 ,  118/255 ,  83/255]
+    tan    = [199/255 , 178/255 , 153/255]
+    gray   = [100/255 , 100/255 , 100/255]    
+
+    # First set up the figure, the axis
+    
+    fig = plt.figure(figsize=(10,7.5) , dpi=100)
+    ax1 = fig.add_subplot(1, 4, 1)
+    ax2 = fig.add_subplot(1, 4, 2)
+    ax3 = fig.add_subplot(1, 4, 3)
+    ax4 = fig.add_subplot(1, 4, 4)
+    
+    ax1.set_ylabel(r'Dimensionless depth')
+    ax1.set_xlim([0,1])
+    
+    ax2.set_xlim([0,1])
+    ax2.axes.yaxis.set_visible(False)
+    
+    ax3.set_xlim([0,1])
+    ax3.axes.yaxis.set_visible(False)
+
+    ax4.set_xlim([0,1])
+    ax4.axes.yaxis.set_visible(False)
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    kk = np.array([1e-6,0.08,0.16,0.24,1])  #time stamps
+    
+    ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+    ax4.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+
+    ax1.set_ylim([1+0.1, 1-0.1])
+    ax2.set_ylim([1+0.1, 1-0.1])
+    ax3.set_ylim([1+0.1, 1-0.1]) 
+    ax4.set_ylim([1+0.1, 1-0.1]) 
+    
+    
+    k = kk[0] 
+    
+    print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    H_analy_left =np.ones_like(left)*H_analy1[0]
+    C_analy_left=np.ones_like(left)*C_analy1[0]
+    H_analy_right =np.ones_like(right)*H_analy1[-1]
+    C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    eta = np.concatenate((left,eta,right),axis=0)
+    
+    ###Add 1+
+    ax1.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax1.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax1.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+
+    k =  kk[1]
+    ax2.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')    
+    
+    k =  kk[2]
+    
+    ax3.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax3.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax3.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    k =  kk[3]
+    
+    ax4.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax4.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax4.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    ax1.legend(loc='lower left', shadow=False, fontsize='medium')
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    ax1.set_title(r'$\tau=$%.2f'%(3.56+kk[0]))
+    ax2.set_title(r'%.2f'%(3.56+kk[1]))
+    ax3.set_title(r'%.2f'%(3.56+kk[2]))
+    ax4.set_title(r'%.2f'%(3.56+kk[3]))
+    plt.subplots_adjust(wspace=0.15, hspace=0)
+    plt.savefig(f"../Figures/{case_no}_combined.pdf") 
+
+def plot_time_varying(C_analy1,H_analy1,eta,Ste,Cpr,case_no):
+
+    brown  = [181/255 , 101/255, 29/255]
+    red    = [255/255 ,255/255 ,255/255 ]
+    blue   = [ 30/255 ,144/255 , 255/255 ]
+    green  = [  0/255 , 166/255 ,  81/255]
+    orange = [247/255 , 148/255 ,  30/255]
+    purple = [102/255 ,  45/255 , 145/255]
+    brown  = [155/255 ,  118/255 ,  83/255]
+    tan    = [199/255 , 178/255 , 153/255]
+    gray   = [100/255 , 100/255 , 100/255]    
+
+    # First set up the figure, the axis
+    
+    fig = plt.figure(figsize=(10,7.5) , dpi=100)
+    ax1 = fig.add_subplot(1, 4, 1)
+    ax2 = fig.add_subplot(1, 4, 2)
+    ax3 = fig.add_subplot(1, 4, 3)
+    ax4 = fig.add_subplot(1, 4, 4)
+    
+    ax1.set_ylabel(r'Dimensionless depth')
+    ax1.set_xlim([0,1])
+    
+    ax2.set_xlim([0,1])
+    ax2.axes.yaxis.set_visible(False)
+    
+    ax3.set_xlim([0,1])
+    ax3.axes.yaxis.set_visible(False)
+
+    ax4.set_xlim([0,1])
+    ax4.axes.yaxis.set_visible(False)
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    kk = np.array([1e-7,1.1866666666666668,2.3733333333333335,3.56])  #time stamps
+    
+    ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+    ax4.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+
+    ax1.set_ylim([1, -0.1])
+    ax2.set_ylim([1, -0.1])
+    ax3.set_ylim([1, -0.1]) 
+    ax4.set_ylim([1, -0.1]) 
+    
+    
+    k = kk[0] 
+    
+    print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    H_analy_left =np.ones_like(left)*H_analy1[0]
+    C_analy_left=np.ones_like(left)*C_analy1[0]
+    H_analy_right =np.ones_like(right)*H_analy1[-1]
+    C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    eta = np.concatenate((left,eta,right),axis=0)
+    
+    ###Add 1+
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax1.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+
+    k =  kk[1]
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')    
+    
+    k =  kk[2]
+    
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax3.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    k =  kk[3]
+    
+    ax4.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax4.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax4.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    ax1.legend(loc='lower left', shadow=False, fontsize='medium')
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    ax1.set_title(r'$\tau=$%.2f'%(kk[0]))
+    ax2.set_title(r'%.2f'%(kk[1]))
+    ax3.set_title(r'%.2f'%(kk[2]))
+    ax4.set_title(r'%.2f'%(kk[3]))
+    plt.subplots_adjust(wspace=0.15, hspace=0)
+    plt.savefig(f"../Figures/{case_no}_combined.pdf")  
+    
+    
+def plot_time_varying_lower_layer(C_analy1,H_analy1,eta,Ste,Cpr,case_no):  #when in continuity with single front for AGU
+
+    brown  = [181/255 , 101/255, 29/255]
+    red    = [255/255 ,255/255 ,255/255 ]
+    blue   = [ 30/255 ,144/255 , 255/255 ]
+    green  = [  0/255 , 166/255 ,  81/255]
+    orange = [247/255 , 148/255 ,  30/255]
+    purple = [102/255 ,  45/255 , 145/255]
+    brown  = [155/255 ,  118/255 ,  83/255]
+    tan    = [199/255 , 178/255 , 153/255]
+    gray   = [100/255 , 100/255 , 100/255]    
+
+    # First set up the figure, the axis
+    
+    fig = plt.figure(figsize=(10,7.5) , dpi=100)
+    ax1 = fig.add_subplot(1, 4, 1)
+    ax2 = fig.add_subplot(1, 4, 2)
+    ax3 = fig.add_subplot(1, 4, 3)
+    ax4 = fig.add_subplot(1, 4, 4)
+    
+    ax1.set_ylabel(r'Dimensionless depth')
+    ax1.set_xlim([0,1])
+    
+    ax2.set_xlim([0,1])
+    ax2.axes.yaxis.set_visible(False)
+    
+    ax3.set_xlim([0,1])
+    ax3.axes.yaxis.set_visible(False)
+
+    ax4.set_xlim([0,1])
+    ax4.axes.yaxis.set_visible(False)
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    kk = np.array([1e-7,1.1866666666666668,2.3733333333333335,3.56])  #time stamps
+    
+    ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+    ax4.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+    
+        
+    ax1.set_ylim([1+0.5,1-1])
+    ax2.set_ylim([1+0.5,1-1])
+    ax3.set_ylim([1+0.5,1-1]) 
+    ax4.set_ylim([1+0.5,1-1])
+
+    k = kk[0] 
+    
+    print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    H_analy_left =np.ones_like(left)*H_analy1[0]
+    C_analy_left=np.ones_like(left)*C_analy1[0]
+    H_analy_right =np.ones_like(right)*H_analy1[-1]
+    C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    eta = np.concatenate((left,eta,right),axis=0)
+    
+    ###Add 1+
+    ax1.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax1.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax1.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+
+    k =  kk[1]
+    ax2.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')    
+    
+    k =  kk[2]
+    
+    ax3.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax3.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax3.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    k =  kk[3]
+    
+    ax4.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax4.fill_betweenx(1+k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax4.fill_betweenx(1+k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    ax1.legend(loc='lower left', shadow=False, fontsize='medium')
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    ax1.set_title(r'$\tau=$%.2f'%(3.56+kk[0]))
+    ax2.set_title(r'%.2f'%(3.56+kk[1]))
+    ax3.set_title(r'%.2f'%(3.56+kk[2]))
+    ax4.set_title(r'%.2f'%(3.56+kk[3]))
+    plt.subplots_adjust(wspace=0.15, hspace=0)
+    plt.savefig(f"../Figures/{case_no}_combined_later.pdf")  
+
+
+def plot_time_varying_paper(C_analy1,H_analy1,eta,Ste,Cpr,case_no):
+
+    brown  = [181/255 , 101/255, 29/255]
+    red    = [255/255 ,255/255 ,255/255 ]
+    blue   = [ 30/255 ,144/255 , 255/255 ]
+    green  = [  0/255 , 166/255 ,  81/255]
+    orange = [247/255 , 148/255 ,  30/255]
+    purple = [102/255 ,  45/255 , 145/255]
+    brown  = [155/255 ,  118/255 ,  83/255]
+    tan    = [199/255 , 178/255 , 153/255]
+    gray   = [100/255 , 100/255 , 100/255]    
+
+    # First set up the figure, the axis
+    
+    fig = plt.figure(figsize=(7.5,7.5) , dpi=100)
+    ax1 = fig.add_subplot(1, 3, 1)
+    ax2 = fig.add_subplot(1, 3, 2)
+    ax3 = fig.add_subplot(1, 3, 3)
+    
+    ax1.set_ylabel(r'Dimensionless depth')
+    ax1.set_xlim([0,1])
+    
+    ax2.set_xlim([0,1])
+    ax2.axes.yaxis.set_visible(False)
+    
+    ax3.set_xlim([0,1])
+    ax3.axes.yaxis.set_visible(False)
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    kk = np.array([1e-3, 0.5, 1.0])  #time stamps
+    
+    ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+
+    ax1.set_ylim([1, -0.05])
+    ax2.set_ylim([1, -0.05])
+    ax3.set_ylim([1, -0.05]) 
+    
+    
+    k = kk[0] 
+    
+    print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    H_analy_left =np.ones_like(left)*H_analy1[0]
+    C_analy_left=np.ones_like(left)*C_analy1[0]
+    H_analy_right =np.ones_like(right)*H_analy1[-1]
+    C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    eta = np.concatenate((left,eta,right),axis=0)
+    
+    ###Add 1+
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax1.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+
+    k =  kk[1]
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')    
+    
+    k =  kk[2]
+    
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax3.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    ax1.legend(loc='lower left', shadow=False, fontsize='medium')
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    ax1.set_title(r'$\tau=$%.2f'%(kk[0]))
+    ax2.set_title(r'%.2f'%(kk[1]))
+    ax3.set_title(r'%.2f'%(kk[2]))
+    plt.subplots_adjust(wspace=0.15, hspace=0)
+    plt.savefig(f"../Figures/{case_no}_combined.pdf")  
+
+
+def plot_time_varying_paper_variable_limits_variable_time(C_analy1,H_analy1,eta,Ste,Cpr,case_no,times=np.array([1e-3, 0.5, 1.0]),min_depth=-0.05,max_depth=1.0):
+
+    brown  = [181/255 , 101/255, 29/255]
+    red    = [255/255 ,255/255 ,255/255 ]
+    blue   = [ 30/255 ,144/255 , 255/255 ]
+    green  = [  0/255 , 166/255 ,  81/255]
+    orange = [247/255 , 148/255 ,  30/255]
+    purple = [102/255 ,  45/255 , 145/255]
+    brown  = [155/255 ,  118/255 ,  83/255]
+    tan    = [199/255 , 178/255 , 153/255]
+    gray   = [100/255 , 100/255 , 100/255]    
+
+    # First set up the figure, the axis
+    
+    fig = plt.figure(figsize=(7.5,7.5) , dpi=100)
+    ax1 = fig.add_subplot(1, 3, 1)
+    ax2 = fig.add_subplot(1, 3, 2)
+    ax3 = fig.add_subplot(1, 3, 3)
+    
+    ax1.set_ylabel(r'Dimensionless depth')
+    ax1.set_xlim([0,1])
+    
+    ax2.set_xlim([0,1])
+    ax2.axes.yaxis.set_visible(False)
+    
+    ax3.set_xlim([0,1])
+    ax3.axes.yaxis.set_visible(False)
+    
+    #manager = plt.get_current_fig_manager()
+    #manager.window.showMaximized()
+    
+    kk = times  #time stamps
+    
+    ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+
+    ax1.set_ylim([max_depth,min_depth])
+    ax2.set_ylim([max_depth,min_depth])
+    ax3.set_ylim([max_depth,min_depth]) 
+    
+    
+    k = kk[0] 
+    
+    print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    H_analy_left =np.ones_like(left)*H_analy1[0]
+    C_analy_left=np.ones_like(left)*C_analy1[0]
+    H_analy_right =np.ones_like(right)*H_analy1[-1]
+    C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    eta = np.concatenate((left,eta,right),axis=0)
+    
+    ###Add 1+
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax1.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax1.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+
+    k =  kk[1]
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax2.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax2.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')    
+    
+    k =  kk[2]
+    
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1)+phi_w(H_analy1,C_analy1)+phi_g(H_analy1,C_analy1), facecolor='white',label=r'$\phi_g$')
+    ax3.fill_betweenx(k*eta, phi_w(H_analy1,C_analy1)+phi_i(H_analy1,C_analy1), facecolor=blue,label=r'$\phi_w$')
+    ax3.fill_betweenx(k*eta, phi_i(H_analy1,C_analy1), facecolor=light_gray,label=r'$\phi_i$')
+    
+    #ax1.legend(loc='center left', shadow=False, fontsize='medium')
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    ax1.set_title(r'$\tau=$%.2f'%(kk[0]))
+    ax2.set_title(r'%.2f'%(kk[1]))
+    ax3.set_title(r'%.2f'%(kk[2]))
+    plt.subplots_adjust(wspace=0.15, hspace=0)
+    plt.savefig(f"../Figures/{case_no}_combined.pdf")  
+    
+    # # Temperature plots
+    
+    # fig = plt.figure(figsize=(7.5,7.5) , dpi=100)
+    # ax1 = fig.add_subplot(1, 3, 1)
+    # ax2 = fig.add_subplot(1, 3, 2)
+    # ax3 = fig.add_subplot(1, 3, 3)
+    
+    # ax1.set_ylabel(r'Dimensionless depth')
+    # #ax1.set_xlim([0,1])
+    
+    # #ax2.set_xlim([0,1])
+    # ax2.axes.yaxis.set_visible(False)
+    
+    # #ax3.set_xlim([0,1])
+    # ax3.axes.yaxis.set_visible(False)
+    
+    # #manager = plt.get_current_fig_manager()
+    # #manager.window.showMaximized()
+    
+    # kk = times  #time stamps
+    
+    # ax1.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    # ax2.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]])
+    # ax3.set_ylim([np.max(eta)*kk[-1], np.min(eta)*kk[-1]]) 
+
+    # ax1.set_ylim([max_depth,min_depth])
+    # ax2.set_ylim([max_depth,min_depth])
+    # ax3.set_ylim([max_depth,min_depth]) 
+    
+    
+    # k = kk[0] 
+    
+    # print(kk[-1]*np.min(eta), k*np.min(eta), k*np.max(eta),kk[-1]*np.max(eta))
+    # left  = np.linspace(kk[-1]*np.min(eta)/(k+1e-10),np.min(eta),10000)
+    # right = np.linspace(np.max(eta),kk[-1]*np.max(eta)/(k+1e-10),10000)
+    
+    # H_analy_left =np.ones_like(left)*H_analy1[0]
+    # C_analy_left=np.ones_like(left)*C_analy1[0]
+    # H_analy_right =np.ones_like(right)*H_analy1[-1]
+    # C_analy_right=np.ones_like(right)*C_analy1[-1] 
+    
+    # H_analy1 = np.concatenate((H_analy_left,H_analy1 ,H_analy_right),axis=0)
+    # C_analy1 = np.concatenate((C_analy_left,C_analy1 ,C_analy_right),axis=0)    
+    # eta = np.concatenate((left,eta,right),axis=0)
+    
+    # ###Add Temp plot
+    # ax1.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
+    # k =  kk[1]
+    # ax2.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
+    # plt.xlabel(r'Dim-less Temperature $\mathcal{T}$')    
+    # k =  kk[2]
+    # ax3.plot(k*eta,T(H_analy1, C_analy1, Ste, Cpr))
+    
+    
+    # plt.subplots_adjust(wspace=0, hspace=0.2)
+    # ax1.set_title(r'$\tau=$%.2f'%(kk[0]))
+    # ax2.set_title(r'%.2f'%(kk[1]))
+    # ax3.set_title(r'%.2f'%(kk[2]))
+    # plt.subplots_adjust(wspace=0.15, hspace=0)
+    # plt.savefig(f"../Figures/{case_no}_Temp_combined.pdf")  
 
 
