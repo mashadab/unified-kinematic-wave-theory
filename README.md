@@ -51,7 +51,7 @@ Tested on
 
 
 ### Quick Usage
-After cloning the repository and installing the required libraries, run the Python files corresponding to the figure numbers as given in the paper. Codes can be run either directly or on an IDE such as Anaconda Spyder. `Solver` is the folder containing the auxiliaries. Comments are provided in the code. All codes to run are provided in `src` folder. Output figures are located in the Figures folder. Use `%matplotlib qt` for plotting in a separate window.
+After cloning the repository and installing the required libraries, run the Python files corresponding to the figure numbers as given in the paper. Codes can be run either directly or on an IDE such as Anaconda Spyder. `PyDOT` is the folder containing the auxiliaries (except `aux`). Comments are provided in the code. All codes to run are provided in `src` folder. Output figures are located in the Figures folder. Use `%matplotlib qt` for plotting in a separate window.
 
 #### Figures plotted by corresponding Python file in `src/` folder with rough times on a Modern 4 core PC
 Figure 6-12: src/main.py   <Approx runtime: 1 min >
