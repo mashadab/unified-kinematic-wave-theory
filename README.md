@@ -39,12 +39,11 @@ Tested on
 
 
 ### Quick Usage
-After cloning the repository and installing the required libraries, run the Python files corresponding to the figure numbers as given in the paper. Codes can be run either directly or on an IDE such as Anaconda Spyder. `Solver` is the folder containing the auxiliaries.
-Comments are provided in the code. All codes to run are provided in `Main` folder. Output figures are located in the Figures folder.
+After cloning the repository and installing the required libraries, run the Python files corresponding to the figure numbers as given in the paper. Codes can be run either directly or on an IDE such as Anaconda Spyder. `Solver` is the folder containing the auxiliaries. Comments are provided in the code. All codes to run are provided in `src` folder. Output figures are located in the Figures folder. Use `%matplotlib qt` for plotting in a separate window.
 
 #### Figures plotted by corresponding Python file in `Main/Codes/` folder with rough times on a Modern 4 core PC
-Figure 6-12: src/main.py   <Approx runtime: 5 mins >
-Figure   13: figure2ef_regime_diagram.py <Approx runtime: 1-5 seconds >
+Figure 6-12: src/main.py   <Approx runtime: <1 min >
+Figure   13: figure13.py   <Approx runtime: 3-4 minutes >
 
 <p align="center">
 <img src="./Cover/cover.png" height="700">
