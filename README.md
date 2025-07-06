@@ -1,4 +1,9 @@
 # Unified kinematic wave theory for melt infiltration into firn
+
+## Lecture video summarizing construction of all 12 solutions
+[![Watch the lecture video](./Figures/Lecture_video.jpg)](./Lecture_video.mp4)
+
+
 ## Authors
 - Mohammad Afzal Shadab<sup>1,2,3</sup> (mashadab@princeton.edu/mashadab@utexas.edu)
 - Anja Rutishauser<sup>4,5</sup>
@@ -30,7 +35,7 @@ Figure : Infiltration into a multilayered firn with porosity and temperature dec
 
 
 ## Citations/References
-[1] Shadab, Rutishauser, Grima, and Hesse, 2024. A unified kinematic wave theory for melt infiltration into firn. arXiv preprint arXiv:2403.15996 (submitted).
+[1] Shadab, Rutishauser, Grima, and Hesse, 2025. A unified kinematic wave theory for melt infiltration into firn. Journal of Glaciology, accepted manuscript, pp.1-60.
 
 [2] Shadab, Adhikari, Rutishauser, Grima, and Hesse, 2024. A mechanism for ice layer formation in glacial firn. Geophysical Research Letters, 51(15), p.e2024GL109893.
 
