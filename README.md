@@ -1,8 +1,6 @@
 # Unified kinematic wave theory for melt infiltration into firn
 
 ## Lecture video summarizing construction of all 12 solutions
-[![Watch the lecture video](./Figures/Lecture_video.jpg)](./Lecture_video.mp4)
-
 [![Watch the lecture video](./Figures/Lecture_video.jpg)](https://www.youtube.com/watch?v=Rkk2JMgiuZQ)
 
 ## Authors
