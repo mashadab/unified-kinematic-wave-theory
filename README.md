@@ -3,6 +3,7 @@
 ## Lecture video summarizing construction of all 12 solutions
 [![Watch the lecture video](./Figures/Lecture_video.jpg)](./Lecture_video.mp4)
 
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=Rkk2JMgiuZQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Authors
 - Mohammad Afzal Shadab<sup>1,2,3</sup> (mashadab@princeton.edu/mashadab@utexas.edu)
